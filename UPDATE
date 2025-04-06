@@ -1,0 +1,21 @@
+name: Update JSON Daily
+
+on:
+  schedule:
+    - cron: '0 * * * *' # runs hourly
+  workflow_dispatch:
+
+jobs:
+  update-json:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: Fetch JSON and Update File
+      run: |
+        curl -o data.json  '547bbe0112a94810b2f46a17ec0a0198'
+        git config user.name github-actions
+        git config user.email github-actions@github.com
+        git add data.json
+        git commit -m "Update JSON data"
+        git push
